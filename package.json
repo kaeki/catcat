@@ -1,0 +1,26 @@
+{
+  "name": "testdb",
+  "version": "0.0.1",
+  "description": "Testing mongodb with node.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r dotenv/config server.js"
+  },
+  "keywords": [
+    "Node.js",
+    "MongoDB"
+  ],
+  "author": "Atte Salo",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-google": "^0.7.1"
+  }
+}
