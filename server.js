@@ -11,7 +11,7 @@ const Schema = mongoose.Schema;
 
 const catSchema = new Schema({
     name: String,
-    dob: Date,
+    age: Number,
     gender: {
         type: String,
         enum: ['male', 'female'],
@@ -59,7 +59,7 @@ app.post('/addcat', bodyParser.urlencoded({extended: true}), (req, res) => {
 
 app.get('/cats', (req, res) => {
     Cat
-    .where('dob').gt(Date.now() - 315569259747)
+    .where('age').gt(10)
     .where('weight').gt(10)
     .where('gender').equals('male')
     .exec()
