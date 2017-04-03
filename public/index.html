@@ -21,21 +21,84 @@
             </div>
         </nav>
         <div class="container">
-        <h1>ADD A NEW CAT</h1>
-        <form id="catForm" action="/addcat" method="POST">
-            Name:<br>
-            <input type="text" name="name"><br>
-            Age:<br>
-            <input type="number" name="age"><br>
-            Gender:<br>
-            <input type="radio" name="gender" value="male" checked> Male<br>
-            <input type="radio" name="gender" value="female"> Female<br>
-            Color:<br>
-            <input type="text" name="color"><br>
-            Weight:<br>
-            <input type="number" name="weight"><br>
-            <input type="submit" value="Submit">
-        </form>
+        <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#add" role="tab">Add Cat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#get" role="tab">Get Cats</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="add" role="tabpanel">
+                    <h1>ADD A NEW CAT</h1>
+                    <form action="/addcat" method="POST">
+                        Name:<br>
+                        <input type="text" name="name" required><br>
+                        Age:<br>
+                        <input type="number" name="age" required><br>
+                        Gender:<br>
+                        <input type="radio" name="gender" value="male" checked> Male<br>
+                        <input type="radio" name="gender" value="female"> Female<br>
+                        Color:<br>
+                        <input type="text" name="color" required><br>
+                        Weight:<br>
+                        <input type="number" name="weight" required><br>
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                    </form>
+                </div>
+                <div class="tab-pane" id="get" role="tabpanel">
+                    <h1>GET CATS</h1>
+                    <form id="getForm">
+                        Minimum age:<br>
+                        <input type="number" name="age"><br>
+                        Minimum weight:<br>
+                        <input type="number" name="weight"><br>
+                    </form>
+                    <button class="btn btn-primary" id="getFormBtn">Get those cats!</button>
+                    <button class="btn btn-primary" id="getAllCatsBtn">Get All Cats!</button>
+                    <hr>
+                    <div id="catContainer" class="row"> 
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="editModal" class="modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Cat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        Name:<br>
+                        <input type="text" name="name" required><br>
+                        Age:<br>
+                        <input type="number" name="age" required><br>
+                        Gender:<br>
+                        <input type="radio" name="gender" value="male"> Male<br>
+                        <input type="radio" name="gender" value="female"> Female<br>
+                        Color:<br>
+                        <input type="text" name="color" required><br>
+                        Weight:<br>
+                        <input type="number" name="weight"><br>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="saveChangesBtn" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
         </div>
         <style>
             body {
@@ -43,5 +106,6 @@
                 margin: 0 auto;
             }
         </style>
+        <script src="./main.js"></script>
     </body>
 </html>

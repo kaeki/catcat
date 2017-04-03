@@ -23,12 +23,6 @@ const catSchema = new Schema({
 
 const Cat = mongoose.model('Cat', catSchema);
 
-/* ADDING A NEW CAT
-Cat.create({hidden: false}).then( (cat) => {
-    console.log(cat.id);
-});
-*/
-
 Cat.find().exec().then( (cats) => {
     console.log(`Found ${cats.length} cats.`);
     console.log(cats);
@@ -50,7 +44,6 @@ app.get('/', (req, res) => {
 
 app.post('/addcat', bodyParser.urlencoded({extended: true}), (req, res) => {
     res.send('You sent the name "' + req.body.name + '".');
-    req.body.dob = new Date(req.body.dob);
     Cat.create(req.body).then( (cat) => {
         console.log(cat.id);
         console.log(cat.name);
@@ -58,14 +51,59 @@ app.post('/addcat', bodyParser.urlencoded({extended: true}), (req, res) => {
 });
 
 app.get('/cats', (req, res) => {
+    Cat.find({}, (err, cats) => {
+        if(err) throw err;
+
+        res.send(cats);
+    });
+});
+
+app.get('/getcats', bodyParser.urlencoded({extended: true}), (req, res) => {
     Cat
-    .where('age').gt(10)
-    .where('weight').gt(10)
-    .where('gender').equals('male')
+    .where('age').gt(req.query.age)
+    .where('weight').gt(req.query.weight)
     .exec()
     .then( (cats) => {
         console.log(cats);
         res.send(cats);
     });
 });
+
+app.patch('/editcat', bodyParser.urlencoded({extended: true}), (req, res) => {
+    Cat.findById(req.query._id, (err, cat) => {
+        if (!cat) {
+            console.log('Cat not found');
+            res.sendStatus(501);
+        }
+        else {
+            cat.name = req.query.name;
+            cat.age = req.query.age;
+            cat.gender = req.query.gender;
+            cat.color = req.query.color;
+            cat.weight = req.query.weight;
+
+            cat.save(function(err) {
+                if (err) {
+                    console.log('Error: '+err)
+                    res.sendStatus(501);
+                }
+                else {
+                    res.sendStatus(200);
+                
+                }
+            });
+        }
+    });
+});
+
+app.delete('/deletecat', bodyParser.urlencoded({extended: true}), (req, res) => {
+    Cat.findById(req.query._id).remove().exec( (err, response) => {
+        if(err){
+            res.sendStatus(501);
+        }
+        else{
+            res.sendStatus(200);
+        }
+    })
+})
 
