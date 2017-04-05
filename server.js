@@ -69,41 +69,27 @@ app.get('/getcats', bodyParser.urlencoded({extended: true}), (req, res) => {
     });
 });
 
-app.patch('/editcat', bodyParser.urlencoded({extended: true}), (req, res) => {
-    Cat.findById(req.query._id, (err, cat) => {
-        if (!cat) {
-            console.log('Cat not found');
+app.patch('/editcat/:id', bodyParser.urlencoded({extended: true}), (req, res) => {
+    const id = req.params.id;
+    Cat.findByIdAndUpdate(id, {
+        $set: req.query,
+    }, {new: true}, (err, doc) => {
+        if(err) {
+            console.log(err);
             res.sendStatus(501);
-        }
-        else {
-            cat.name = req.query.name;
-            cat.age = req.query.age;
-            cat.gender = req.query.gender;
-            cat.color = req.query.color;
-            cat.weight = req.query.weight;
-
-            cat.save(function(err) {
-                if (err) {
-                    console.log('Error: '+err)
-                    res.sendStatus(501);
-                }
-                else {
-                    res.sendStatus(200);
-                
-                }
-            });
+        } else {
+            res.sendStatus(200);
         }
     });
 });
 
 app.delete('/deletecat', bodyParser.urlencoded({extended: true}), (req, res) => {
     Cat.findById(req.query._id).remove().exec( (err, response) => {
-        if(err){
+        if(err) {
             res.sendStatus(501);
-        }
-        else{
+        } else {
             res.sendStatus(200);
         }
-    })
-})
+    });
+});
 
