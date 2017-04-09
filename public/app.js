@@ -1,19 +1,19 @@
 
 
 
-document.getElementById("getFormBtn").addEventListener('click', (event) => {
+document.getElementById('getFormBtn').addEventListener('click', (event) => {
     let url = '/getCats?';
-    const formData = new FormData(document.getElementById("getForm"));
-    for(const pair of formData.entries()){
+    const formData = new FormData(document.getElementById('getForm'));
+    for(const pair of formData.entries()) {
         url += pair[0] +'='+ pair[1]+'&';
     }
     fetch(url, { method: 'GET' })
-        .then(response => {
-            response.json().then( json => {
+        .then((response) => {
+            response.json().then( (json) => {
                 showCats(json);
             });
         })
-        .catch(err => {
+        .catch((err) => {
             alert('Whoops: '+err);
         });
 });
@@ -22,8 +22,9 @@ document.getElementById('getAllCatsBtn').addEventListener('click', getAllCats);
 document.querySelector('#saveChangesBtn').addEventListener('click', function() {
     return saveChanges(document.getElementById('editForm'));
 });
+
 function getAllCats() {
-    fetch('/cats', { method: 'GET' })
+    fetch('/cats', {method: 'GET'})
     .then((response) => {
         response.json().then( (json) => {
             showCats(json);
@@ -76,7 +77,7 @@ function showCats(cats) {
         });
         catContainer.appendChild(card);
     }
-}
+};
 
 function editCat(cat) {
     const modalForm = document.getElementById('editForm');
@@ -115,9 +116,9 @@ function deleteCat(cat) {
     const result = confirm('Are you sure you want to delete lil\' '+cat.name+'? ;__;');
     if (result) {
         const url = '/deletecat?_id='+cat._id;
-        fetch(url, { method: 'DELETE' })
+        fetch(url, {method: 'DELETE'})
         .then((response) => {
-            if(response.status !== 200){
+            if(response.status !== 200) {
                 alert('Delete FAiled!');
             }
             else {
